@@ -1,0 +1,61 @@
+{
+  "format": 1,
+  "restore": {
+    "g:\\trading\\tdameritrade\\stockbot_C#_polygon\\stockbot\\stockbot.csproj": {}
+  },
+  "projects": {
+    "g:\\trading\\tdameritrade\\stockbot_C#_polygon\\stockbot\\stockbot.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "g:\\trading\\tdameritrade\\stockbot_C#_polygon\\stockbot\\stockbot.csproj",
+        "projectName": "stockbot",
+        "projectPath": "g:\\trading\\tdameritrade\\stockbot_C#_polygon\\stockbot\\stockbot.csproj",
+        "packagesPath": "C:\\Users\\pragm\\.nuget\\packages\\",
+        "outputPath": "g:\\trading\\tdameritrade\\stockbot_C#_polygon\\stockbot\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "configFilePaths": [
+          "C:\\Users\\pragm\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net472"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net472": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
+            "WebSocket4Net": {
+              "target": "Package",
+              "version": "[0.15.2, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    }
+  }
+}

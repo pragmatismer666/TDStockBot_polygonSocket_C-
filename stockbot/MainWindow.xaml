@@ -1,0 +1,106 @@
+﻿<Window x:Class="stockbot.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:stockbot"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="440" Width="600" >
+    <Grid>
+        <StackPanel Orientation="Vertical" Height="420" Background="#FFD1D1D1">
+            <StackPanel Name="buy_panel" Margin="10,10,10,10" Orientation="Vertical" Background="#FFEFEFEF" Height="170">
+                <StackPanel Name="buy_stock_add_panel" Margin="0,0,0,0" Height="30" Orientation="Horizontal" Background="#FFEFEFEF">
+                    <Label Content="Buy Panel" FontSize="20" Margin="10,0,0,0" Padding="0,0,0,0" VerticalContentAlignment="Center" Width="90"></Label>
+                    <StackPanel Margin="60,0,0,0" Orientation="Horizontal">
+                        <TextBox Name="buy_stock" Margin="0,5,0,5" VerticalContentAlignment="Center" Width="80" TextChanged="Buy_stock_changed" CharacterCasing="Upper"></TextBox>
+                    </StackPanel>
+                    <Button x:Name="buy_add" Margin="0,5,10,5" Content="ADD SYMBOL" Width="100" Click="First_add"></Button>
+                    <StackPanel Margin="30,0,0,0" Orientation="Horizontal">
+                        <TextBox Name="amount" Margin="0,5,0,5" VerticalContentAlignment="Center" Width="80"></TextBox>
+                    </StackPanel>
+                    <Button x:Name="amount_add" Margin="0,5,10,5" Content="ADD  AMOUNT" Width="100" Click="amount_add_Click"></Button>
+                </StackPanel>
+                <StackPanel Margin="0,0,0,0" Background="White" Height="110">
+                    <StackPanel Orientation="Horizontal" Height="20" Background="#FFE1E1E1">
+                        <Label Content="Symbol ( close : open )" Margin="10,0,0,0" Padding="0,0,0,0" VerticalContentAlignment="Center" Width="140"></Label>
+                        <Label Content="Qty" Margin="10,0,10,0" Padding="20,0,0,0" VerticalContentAlignment="Center" Width="100"></Label>
+                        <Label Content="MEKWR Change %" Margin="10,0,10,0" Padding="20,0,0,0" VerticalContentAlignment="Center" Width="160"></Label>
+                        <Label Content="" Padding="0,0,0,0" VerticalContentAlignment="Center" Width="150"></Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Height="30">
+                        <Label Name="first_buy_symbol" Margin="0,0,0,0" VerticalContentAlignment="Center" Width="150"></Label>
+                        <TextBox Name="first_buy_qty" Margin="10,5,10,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Width="100"></TextBox>
+                        <Label Name="first_change" Margin="10,0,10,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="160"></Label>
+                        <Button x:Name="first_buy_delete" Content="Delete" Margin="10,5,10,5" Padding="0,0,0,0" VerticalContentAlignment="Center" Width="100" Click="first_buy_delete_Click"></Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Height="30">
+                        <Label Name="second_buy_symbol" Margin="0,0,0,0" VerticalContentAlignment="Center" Width="150"></Label>
+                        <TextBox Name="second_buy_qty" Margin="10,5,10,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Width="100"></TextBox>
+                        <Label Name="second_change" Margin="10,0,10,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="160"></Label>
+                        <Button x:Name="second_buy_delete" Content="Delete" Margin="10,5,10,5" Padding="0,0,0,0" VerticalContentAlignment="Center" Width="100" Click="second_buy_delete_Click"></Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Height="30" Background="#FFF5F5F5">
+                        <Label Content="% Difference : " Margin="280,0,0,0" VerticalContentAlignment="Center" Width="100"></Label>
+                        <Label Name="buy_diff_status" Margin="0,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Width="80"></Label>
+                        <Label Name="buy_status" Content="Waiting..." Margin="0,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="100"></Label>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Height="30">
+                    <Label Content="BUY difference of" Margin="10,0,0,0" VerticalContentAlignment="Center" Width="140"></Label>
+                    <TextBox Name="buy_diff" Margin="10,5,10,0" VerticalContentAlignment="Center" Width="100" Height="20" VerticalAlignment="Top"></TextBox>
+                    <Button x:Name="buy_cancel" Margin="10,5,10,5" Content="Cancel" Width="70" Foreground="Green" Click="Buy_cancel"></Button>
+                    <Button x:Name="buy_save" Margin="10,5,10,5" Content="Save" Width="70" Background="Green" Foreground="Wheat" Click="Buy_save"></Button>
+                    <Label Width="120"></Label>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Name="automation_panel" Margin="10,0,10,0" Height="30" Background="#FFEFEFEF" Orientation="Horizontal">
+                <Button Name="start_automation" Margin="160, 5, 0, 5" Height="20" Width="120" Content="Start Automation" Background="Green" Foreground="Wheat" Click="Start_Automation_Click"></Button>
+                <Button Name="cancel_automation" Margin="40, 5, 0, 5" Height="20" Width="120" Content="Cancel Automation" Foreground="Green" Click="Cancel_Automation_Click"></Button>
+            </StackPanel>
+            <StackPanel Name="sell_panel" Margin="10,10,10,10" Orientation="Vertical" Background="#FFEFEFEF" Height="170">
+                <StackPanel Name="sell_stock_add_panel" Margin="0,0,0,0" Height="30" Orientation="Horizontal" Background="#FFEFEFEF">
+                    <Label Content="Sell Panel" FontSize="20" Margin="10,0,0,0" Padding="0,0,0,0" VerticalContentAlignment="Center" Width="90"></Label>
+                    <StackPanel Margin="60,0,0,0" Orientation="Horizontal">
+                        <TextBox Name="sell_stock" Margin="0,5,0,5" VerticalContentAlignment="Center" Width="80" CharacterCasing="Upper" TextChanged="Sell_stock_changed"></TextBox>
+                    </StackPanel>
+                    <Button x:Name="sell_add" Margin="0,5,10,5" Content="ADD SYMBOL" Width="100" Click="Second_add"></Button>
+                </StackPanel>
+                <StackPanel Margin="0,0,0,0" Orientation="Vertical" Background="White" Height="110">
+                    <StackPanel Orientation="Horizontal" Height="20" Background="#FFE1E1E1">
+                        <Label Content="Symbol" Margin="10,0,0,0" Padding="0,0,0,0" VerticalContentAlignment="Center" Width="140"></Label>
+                        <Label Content="Qty" Margin="10,0,10,0" Padding="20,0,0,0" VerticalContentAlignment="Center" Width="100"></Label>
+                        <Label Content="Price(bid)" Margin="0,0,0,0" Padding="20,0,0,0" VerticalContentAlignment="Center" Width="80"></Label>
+                        <Label Content="Cost/share" Margin="0,0,0,0" Padding="0,0,0,0" VerticalContentAlignment="Center" Width="100"></Label>
+                        <Label Content="" Padding="0,0,0,0" VerticalContentAlignment="Center" Width="150"></Label>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Height="30">
+                        <Label Name="first_sell_symbol" Margin="0,0,0,0" VerticalContentAlignment="Center" Width="150"></Label>
+                        <TextBox Name="first_sell_qty" Margin="10,5,10,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Width="100" TextChanged="First_sell_qty_change"></TextBox>
+                        <Label Name="first_sell_price" Margin="0,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Width="80"></Label>
+                        <TextBox Name="first_cost" Margin="0,5,10,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Width="100" TextChanged="First_sell_cost_change"></TextBox>
+                        <Button x:Name="first_sell_delete" Content="Delete" Margin="10,5,10,5" Padding="0,0,0,0" VerticalContentAlignment="Center" Width="90" Click="first_sell_delete_Click"></Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Height="30">
+                        <Label Name="second_sell_symbol" Margin="0,0,0,0" VerticalContentAlignment="Center" Width="150"></Label>
+                        <TextBox Name="second_sell_qty" Margin="10,5,10,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Width="100" TextChanged="Second_sell_qty_change"></TextBox>
+                        <Label Name="second_sell_price" Margin="0,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Width="80"></Label>
+                        <TextBox Name="second_cost" Margin="0,5,10,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Width="100" TextChanged="Second_sell_cost_change"></TextBox>
+                        <Button x:Name="second_sell_delete" Content="Delete" Margin="10,5,10,5" Padding="0,0,0,0" VerticalContentAlignment="Center" Width="90" Click="second_sell_delete_Click"></Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Height="30" Background="#FFF5F5F5">
+                        <Label Content="Take Profit Status :" Margin="250,0,0,0" Padding="0,0,0,0" VerticalContentAlignment="Center" Width="100"></Label>
+                        <Label Name="sell_diff_status" Margin="0,0,10,0" VerticalContentAlignment="Center" HorizontalAlignment="Right" Width="100"></Label>
+                        <Label Name="sell_status" Content="Waiting..." Margin="10,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="90"></Label>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Height="30">
+                    <Label Content="Sell Difference of" Margin="10,0,0,0" VerticalContentAlignment="Center" Width="110"></Label>
+                    <TextBox Name="sell_diff" Margin="10,5,10,0" VerticalContentAlignment="Center" Width="100" Height="20" VerticalAlignment="Top"></TextBox>
+                    <Button x:Name="sell_cancel" Margin="10,5,10,5" Content="Cancel" Width="70" Foreground="Green" Click="Sell_cancel"></Button>
+                    <Button x:Name="sell_save" Margin="10,5,10,5" Content="Save" Width="70" Background="Green" Foreground="Wheat" Click="Sell_save"></Button>
+                    <Label Width="150"></Label>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
