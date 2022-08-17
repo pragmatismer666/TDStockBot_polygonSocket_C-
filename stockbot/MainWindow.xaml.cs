@@ -182,28 +182,25 @@ namespace stockbot
             {
                 System.Windows.MessageBox.Show("Please add amount at first.", "Start Automation - Warning!");
             } 
-            else if ( first_buy_qty_val == 0 || second_buy_qty_val == 0 )
+            if ( first_buy_qty_val == 0 || second_buy_qty_val == 0 )
             {
                 System.Windows.MessageBox.Show("Please add stock symbols check data connection to the Polygon at first.", "Start Automation - Warning!");
             }
-            else if ( buy_diff_limit == 0 )
-            {
-                System.Windows.MessageBox.Show("Please add buy limits at first.", "Start Automation - Warning!");
-            }
-            else if ( sell_profit_limit == 0 )
+            //else if ( buy_diff_limit == 0 )
+            //{
+            //    System.Windows.MessageBox.Show("Please add buy limits at first.", "Start Automation - Warning!");
+            //}
+            if (sell_profit_limit == 0)
             {
                 System.Windows.MessageBox.Show("If not set sell amount, Will set as 0.01.", "Start Automation - Notificaton!");
                 sell_profit_limit = 0.01;
                 sell_diff.Text = "0.01";
             }
-            else
-            {
-                automation_flag = true;
-                automation_thread = new Thread(run_automation);
-                automation_thread.Start();
-                start_automation.IsEnabled = false;
-                cancel_automation.IsEnabled = true;
-            }
+            automation_flag = true;
+            automation_thread = new Thread(run_automation);
+            automation_thread.Start();
+            start_automation.IsEnabled = false;
+            cancel_automation.IsEnabled = true;
         }
 
         private void Cancel_Automation_Click(object sender, RoutedEventArgs e)
@@ -220,7 +217,16 @@ namespace stockbot
             while ( true )
             {
                 buy_action();
+                this.Dispatcher.Invoke(() =>
+                {
+                    buy_status.Content = "Waiting";
+                });
                 sell_action();
+                this.Dispatcher.Invoke(() =>
+                {
+                    sell_status.Content = "Waiting";
+                });
+                System.Threading.Thread.Sleep(500);
             }
         }
         // buy part
@@ -345,9 +351,12 @@ namespace stockbot
                     if (percent_diff <= buy_diff_limit)
                     {
                         //float first_buy_price = float.Parse(res[first_buy_sym]["askPrice"].ToString());
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            first_buy_qty_val = Convert.ToInt32(amount_value / first_buy_ap);
+                            first_buy_qty.Text = first_buy_qty_val.ToString();
+                        });
                         first_sell_cost_val = first_buy_ap;
-                        first_buy_qty_val = Convert.ToInt32(amount_value / first_buy_ap);
-                        first_buy_qty.Text = first_buy_qty_val.ToString();
                         first_buy_order = create_order(first_buy_qty_val, float.Parse(first_buy_ap.ToString()), first_buy_sym, "BUY", true);
                         this.Dispatcher.Invoke(() =>
                         {
@@ -356,9 +365,13 @@ namespace stockbot
                                 first_buy_delete.IsEnabled = true;
                             }
                         });
+
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            second_buy_qty_val = Convert.ToInt32(amount_value / second_buy_ap);
+                            second_buy_qty.Text = second_buy_qty_val.ToString();
+                        });
                         second_sell_cost_val = second_buy_ap;
-                        second_buy_qty_val = Convert.ToInt32(amount_value / second_buy_ap);
-                        second_buy_qty.Text = second_buy_qty_val.ToString();
                         second_buy_order = create_order(second_buy_qty_val, float.Parse(second_buy_ap.ToString()), second_buy_sym, "BUY", true);
                         this.Dispatcher.Invoke(() =>
                         {
@@ -1103,25 +1116,25 @@ namespace stockbot
                     if (items[i].sym == first_buy_sym)
                     {
                         // Console.WriteLine(items[i].ap.ToString() + "----- first buy sym");
-                        first_buy_ap = Convert.ToDouble(items[i].ap.ToString()) + 0.001;
+                        first_buy_ap = Convert.ToDouble(items[i].ap.ToString());
                         f_b = true;
                     }
                     if (items[i].sym == second_buy_sym)
                     {
                         // Console.WriteLine(items[i].ap.ToString() + "----- second buy sym");
-                        second_buy_ap = Convert.ToDouble(items[i].ap.ToString()) + 0.001;
+                        second_buy_ap = Convert.ToDouble(items[i].ap.ToString());
                         s_b = true;
                     }
                     if (items[i].sym == first_sell_sym)
                     {
                         // Console.WriteLine(items[i].bp.ToString() + "----- first sell sym");
-                        first_sell_ask_val = Convert.ToDouble(items[i].bp.ToString()) + 0.001;
+                        first_sell_ask_val = Convert.ToDouble(items[i].bp.ToString());
                         f_s = true;
                     }
                     if (items[i].sym == second_sell_sym)
                     {
                         // Console.WriteLine(items[i].bp.ToString() + "----- second sell sym");
-                        second_sell_ask_val = Convert.ToDouble(items[i].bp.ToString()) + 0.001;
+                        second_sell_ask_val = Convert.ToDouble(items[i].bp.ToString());
                         s_s = true;
                     }
                     if ( f_b && s_b && f_s && s_s )
